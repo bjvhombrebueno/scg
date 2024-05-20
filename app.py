@@ -89,7 +89,8 @@ def makebooking():
     print(bookingDate)
     print(bookingNights)
     print(occupancy)
-    print(bookingId[0][0]+1)
+    newBookingId = bookingId[0][0]+1
+    print(newBookingId)
 
-    # connection.execute("INSERT INTO bookings (booking_id, site, customer, booking_date, occupancy) VALUES(%s,%s,%s,%s,%s);",(str(bookingId+1), site, customer, str(bookingDate), occupancy,))
-    pass
+    connection.execute("INSERT INTO bookings (booking_id, site, customer, booking_date, occupancy) VALUES(%s,%s,%s,%s,%s);",(str(newBookingId), site, customer, str(bookingDate), occupancy,))
+    return redirect("/campers")
