@@ -60,16 +60,36 @@ def booking():
         bookingDate = request.form.get('bookingdate')
         occupancy = request.form.get('occupancy')
         firstNight = date.fromisoformat(bookingDate)
-
+        # print(occupancy)
         lastNight = firstNight + timedelta(days=int(bookingNights))
         connection = getCursor()
         connection.execute("SELECT * FROM customers;")
         customerList = connection.fetchall()
         connection.execute("select * from sites where occupancy >= %s AND site_id not in (select site from bookings where booking_date between %s AND %s);",(occupancy,firstNight,lastNight))
         siteList = connection.fetchall()
-        return render_template("bookingform.html", customerlist = customerList, bookingdate=bookingDate, sitelist = siteList, bookingnights = bookingNights)    
+       
+        print(request.form)       
+        return render_template("bookingform.html",customerlist = customerList, bookingdate=bookingDate, sitelist = siteList, bookingnights = bookingNights,occupancy= occupancy)    
 
 @app.route("/booking/add", methods=['POST'])
 def makebooking():
+    print(request.args)
     print(request.form)
+    customer= request.form.get('customer')
+    site = request.form.get('site')
+    bookingDate = request.form.get('bookingdate')
+    bookingNights = request.form.get('bookingnights')
+    occupancy = request.form.get('occupancy')
+    # bookingid = bookingIdList
+    connection = getCursor()
+    connection.execute("SELECT max(booking_id) FROM scg.bookings;")
+    bookingId = connection.fetchall()
+    print(customer)
+    print(site)
+    print(bookingDate)
+    print(bookingNights)
+    print(occupancy)
+    print(bookingId[0][0]+1)
+
+    # connection.execute("INSERT INTO bookings (booking_id, site, customer, booking_date, occupancy) VALUES(%s,%s,%s,%s,%s);",(str(bookingId+1), site, customer, str(bookingDate), occupancy,))
     pass
