@@ -94,3 +94,18 @@ def makebooking():
 
     connection.execute("INSERT INTO bookings (booking_id, site, customer, booking_date, occupancy) VALUES(%s,%s,%s,%s,%s);",(str(newBookingId), site, customer, str(bookingDate), occupancy,))
     return redirect("/campers")
+
+@app.route("/customer", methods=['GET','POST'])
+def customer():
+     if request.method == "GET":
+        return render_template("customersearch.html")
+     else:
+        customerId = request.form.get('customerid')
+        print(request.form)
+        print(type(customerId))
+        connection = getCursor()
+        # connection.execute("SELECT * FROM customers WHERE customer_id = 1661;")
+        connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
+        customerData = connection.fetchall()
+
+        return render_template("customersearch.html",customerdata =customerData)
