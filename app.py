@@ -101,11 +101,21 @@ def customer():
         return render_template("customersearch.html")
      else:
         customerId = request.form.get('customerid')
-        print(request.form)
-        print(type(customerId))
         connection = getCursor()
-        # connection.execute("SELECT * FROM customers WHERE customer_id = 1661;")
         connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
         customerData = connection.fetchall()
 
         return render_template("customersearch.html",customerdata =customerData)
+     
+@app.route("/customer/add", methods=['GET','POST'])
+def addcustomer():
+        if request.method == "GET":
+            return render_template("customeradd.html")
+        else:
+            firstName = request.form.get('firstname')
+            familyName = request.form.get('familyname')
+            email = request.form.get('email')
+            phone = request.form.get('phone')
+            connection = getCursor()
+            connection.execute("INSERT INTO customers (firstname, familyname, email, phone) VALUES(%s,%s,%s,%s);",(firstName, familyName, email, phone,))
+            return redirect("/customer")
