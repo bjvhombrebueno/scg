@@ -82,17 +82,17 @@ def makebooking():
     occupancy = request.form.get('occupancy')
     # bookingid = bookingIdList
     connection = getCursor()
-    connection.execute("SELECT max(booking_id) FROM scg.bookings;")
-    bookingId = connection.fetchall()
+    # connection.execute("SELECT max(booking_id) FROM scg.bookings;")
+    # bookingId = connection.fetchall()
     print(customer)
     print(site)
     print(bookingDate)
     print(bookingNights)
     print(occupancy)
-    newBookingId = bookingId[0][0]+1
-    print(newBookingId)
+    # newBookingId = bookingId[0][0]+1
+    # print(newBookingId)
 
-    connection.execute("INSERT INTO bookings (booking_id, site, customer, booking_date, occupancy) VALUES(%s,%s,%s,%s,%s);",(str(newBookingId), site, customer, str(bookingDate), occupancy,))
+    connection.execute("INSERT INTO bookings (site, customer, booking_date, occupancy) VALUES(%s,%s,%s,%s);",(site, customer, str(bookingDate), occupancy,))
     return redirect("/campers")
 
 @app.route("/customer", methods=['GET','POST'])
@@ -104,7 +104,7 @@ def customer():
         connection = getCursor()
         connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
         customerData = connection.fetchall()
-
+        print(request.form)
         return render_template("customersearch.html",customerdata =customerData)
      
 @app.route("/customer/add", methods=['GET','POST'])
@@ -118,4 +118,21 @@ def addcustomer():
             phone = request.form.get('phone')
             connection = getCursor()
             connection.execute("INSERT INTO customers (firstname, familyname, email, phone) VALUES(%s,%s,%s,%s);",(firstName, familyName, email, phone,))
-            return redirect("/customer")
+            # return redirect("/customer")
+            return render_template("customeradd.html")
+
+@app.route("/customer/edit", methods=['GET','POST'])
+def editcustomer():
+        if request.method == "GET":
+            return render_template("customersearch.html")
+        else:
+            print(request.args)
+            print(request.form)
+            print(request.form)
+            firstName = request.form.get('firstname')
+            familyName = request.form.get('familyname')
+            email = request.form.get('email')
+            phone = request.form.get('phone')
+            connection = getCursor()
+            connection.execute("INSERT INTO customers (firstname, familyname, email, phone) VALUES(%s,%s,%s,%s);",(firstName, familyName, email, phone,))
+            return render_template("customersearch.html")
