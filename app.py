@@ -95,7 +95,20 @@ def makebooking():
     connection.execute("INSERT INTO bookings (site, customer, booking_date, occupancy) VALUES(%s,%s,%s,%s);",(site, customer, str(bookingDate), occupancy,))
     return redirect("/campers")
 
-@app.route("/customer", methods=['GET','POST'])
+# @app.route("/customer", methods=['GET','POST'])
+# def customer():
+#      if request.method == "GET":
+#         return redirect("/customer/search")
+#      else:
+#         customerId = request.form.get('customerid')
+#         connection = getCursor()
+#         connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
+#         customerData = connection.fetchall()
+#         print(request.form)
+#         return render_template("customerdetails.html",customerdata =customerData)
+        
+
+@app.route("/customer/search", methods=['GET','POST'])
 def customer():
      if request.method == "GET":
         return render_template("customersearch.html")
@@ -105,34 +118,74 @@ def customer():
         connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
         customerData = connection.fetchall()
         print(request.form)
-        return render_template("customersearch.html",customerdata =customerData)
-     
-@app.route("/customer/add", methods=['GET','POST'])
+        return render_template("customerdetails.html",customerdata =customerData)
+
+@app.route("/customer/add", methods=['POST'])
 def addcustomer():
-        if request.method == "GET":
-            return render_template("customeradd.html")
-        else:
+       
             firstName = request.form.get('firstname')
             familyName = request.form.get('familyname')
             email = request.form.get('email')
             phone = request.form.get('phone')
             connection = getCursor()
             connection.execute("INSERT INTO customers (firstname, familyname, email, phone) VALUES(%s,%s,%s,%s);",(firstName, familyName, email, phone,))
-            # return redirect("/customer")
+            
             return render_template("customeradd.html")
 
-@app.route("/customer/edit", methods=['GET','POST'])
-def editcustomer():
-        if request.method == "GET":
-            return render_template("customersearch.html")
-        else:
-            print(request.args)
-            print(request.form)
-            print(request.form)
-            firstName = request.form.get('firstname')
-            familyName = request.form.get('familyname')
-            email = request.form.get('email')
-            phone = request.form.get('phone')
-            connection = getCursor()
-            connection.execute("INSERT INTO customers (firstname, familyname, email, phone) VALUES(%s,%s,%s,%s);",(firstName, familyName, email, phone,))
-            return render_template("customersearch.html")
+# @app.route("/customer/edit", methods=['GET','POST'])
+# def editcustomer():
+#         if request.method == "GET" :
+            
+#             customerId = request.form.get('customerid')
+#             connection = getCursor()
+#             connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
+#             customerData = connection.fetchall()
+#             print(request.form)
+#             return redirect("customersearch.html",customerdata=customerData)
+#         else:
+#             print(request.form)
+#             #customerId =request.form.get('customerid')
+#             firstName = request.form.get('firstname')
+#             familyName = request.form.get('familyname')
+#             email = request.form.get('email')
+#             phone = request.form.get('phone')
+#             connection = getCursor()
+#             #print(customerId)
+#             connection.execute("UPDATE customers SET firstname = %s, familyname = %s, email = %s, phone = %s WHERE customer_id = %s;"
+# ,(firstName, familyName, email, phone,customerId))
+#             return render_template("customeredit.html")
+
+
+@app.route("/mycustomer", methods=['GET','POST'])
+def mycustomer():
+    if request.method == "GET":
+        return render_template("mycustomer.html")
+    else:
+        print(request.args)
+        print(request.form)
+        customerId = request.form.get('customerid')       
+        return render_template("mycustomeredit.html",customerid =customerId)    
+
+@app.route("/mycustomer/edit", methods=['POST'])
+def mycustomeredit():
+    print(request.args)
+    print(request.form)
+    customerId = request.form.get('customerid')
+    firstName = request.form.get('firstname')
+    familyName = request.form.get('familyname')
+    email = request.form.get('email')
+    phone = request.form.get('phone')       
+    connection = getCursor()
+    # connection.execute("SELECT max(booking_id) FROM scg.bookings;")
+    # bookingId = connection.fetchall()
+    print(request.form['customerid'])
+    print(firstName)
+    print(familyName)
+    print(email)
+    print(phone)
+    # newBookingId = bookingId[0][0]+1
+    # print(newBookingId)
+
+    connection.execute("UPDATE customers SET firstname = %s, familyname = %s, email = %s, phone = %s WHERE customer_id = %s;"
+,(firstName, familyName, email, phone,customerId,))
+    return redirect('/customer/search')
