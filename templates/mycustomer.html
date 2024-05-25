@@ -2,11 +2,17 @@
 {% block content %}
 <!-- code in here to display a list of books-->
 <h2>Selwyn Campground -mycustomer</h2>
-<h3>Choose the date you'd like the booking to start on.</h3>
+<h3>Choose the customer</h3>
 
 <form action="/mycustomer" method="POST">
 
-    <input type="text" name="customerid"/>
+    <!-- <input type="text" name="customerid"/> -->
+    <select name="customerid">
+        {% for customer in customerdata %}
+            <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}</option>
+        {% endfor %}
+        
+    </select>
     <!-- <button type="submit">Edit</button>
     <button type="submit" formaction="/mycustomer/report">Report</button> -->
     <input type="submit" name="Edit" value="Edit">

@@ -114,11 +114,15 @@ def customer():
      if request.method == "GET":
         return render_template("customersearch.html")
      else:
-        customerId = request.form.get('customerid')
+        customerName = request.form.get('customername')
+        # customerNameEdited =  customerName
+        sql= "SELECT * FROM customers WHERE firstname LIKE '%"+ customerName + "%';"
+        print(sql)
         connection = getCursor()
-        connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
+        connection.execute(sql)
         customerData = connection.fetchall()
         print(request.form)
+        print(customerData)
         return render_template("customerdetails.html",customerdata =customerData)
 
 @app.route("/customer/add", methods=['GET','POST'])
@@ -162,7 +166,10 @@ def addcustomer():
 @app.route("/mycustomer", methods=['GET','POST'])
 def mycustomer():
     if request.method == "GET":
-        return render_template("mycustomer.html")
+        connection = getCursor()
+        connection.execute("SELECT * FROM customers ;")
+        customerData = connection.fetchall()
+        return render_template("mycustomer.html",customerdata = customerData)
     else:
         print(request.args)
         print(request.form)
