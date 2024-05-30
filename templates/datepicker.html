@@ -4,15 +4,34 @@
 <h2>Selwyn Campground - Make a booking</h2>
 <h3>Choose the date you'd like the booking to start on.</h3>
 
-<form action="{{url_for('booking')}}" method="POST">
-<label for="bookingdate">Choose start night of booking</label>
-<input type="date" min="{{currentdate}}" name="bookingdate"/>
-<label for="bookingnights">Number of nights</label>
-<input type="number" name="bookingnights" min="1" max="5" step="1" value="1"/>
-<label for="occupancy">Number of people</label>
-<input type="number" name="occupancy" min="1" max="8" step="1" value="1"/>
+<form action="{{url_for('booking')}}" method="POST" class="row needs-validation" novalidate>
 
-<input type="submit"/>
+<div class = "col-auto">
+    <label for="bookingdate">Choose start night of booking</label>
+    <input type="date" min="{{currentdate}}" name="bookingdate" required/>
+    <div class="invalid-feedback">
+        Please select a valid date
+    </div> 
+</div>
+<div class = "col-auto">
+    <label for="bookingnights">Number of nights</label>
+    <input type="number" name="bookingnights" min="1" max="5" step="1" value="1" required/>
+    <div class="invalid-feedback">
+        Value cannot be 0
+    </div> 
+</div>
+<div class = "col-auto">
+    <label for="occupancy">Number of people</label>
+    <input type="number" name="occupancy" min="1" max="8" step="1" value="1" required/>
+    <div class="invalid-feedback">
+        Value cannot be 0
+    </div> 
+</div>
+
+
+<div class = "col-auto">
+    <input type="submit"/>
+</div>
 </form>
 
 {% endblock %}
