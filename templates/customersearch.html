@@ -19,7 +19,11 @@
     </div>
     
 </form>
-
-{{customerdata}}
+{% if customerdata %}
+    
+    {{customerdata}}
+{% else %}
+    No search results found
+{% endif %}
 
 {% endblock %}
