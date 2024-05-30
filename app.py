@@ -42,7 +42,7 @@ def campers():
         
         print(camperList)
         return render_template("datepickercamper.html", camperlist = camperList)
-        #return render_template("camperlist.html", camperlist = camperList)
+        # return render_template("camperlist.html", camperlist = camperList)
 # @app.route("/campers")
 # def campers():
 #     connection = getCursor()
