@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import redirect
-from flask import url_for
+from flask import url_for_flask
 import re
 from datetime import datetime
 from datetime import date
@@ -42,7 +42,7 @@ def campers():
         
         print(camperList)
         return render_template("datepickercamper.html", camperlist = camperList)
-        # return render_template("camperlist.html", camperlist = camperList)
+        #return render_template("camperlist.html", camperlist = camperList)
 # @app.route("/campers")
 # def campers():
 #     connection = getCursor()
@@ -123,7 +123,7 @@ def customer():
         customerData = connection.fetchall()
         print(request.form)
         print(customerData)
-        return render_template("customersearch.html",customerdata =customerData)
+        return render_template("customerdetails.html",customerdata =customerData)
 
 @app.route("/customer/add", methods=['GET','POST'])
 def addcustomer():
