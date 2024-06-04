@@ -26,10 +26,11 @@
         {% endfor %}
     </select><br> -->
 
-    <select class="form-select" required aria-label="select example">
+    <!-- <select class="form-select" required aria-label="select example"> -->
+    <select class="form-select">
         <option selected disabled value="">Choose customer</option>
         {% for customer in customerlist %} 
-        <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}</option>
+        <option value="{{customer[0]}}" required>{{customer[1]}} {{customer[2]}}</option>
         {% endfor %}
       </select>
     <div class="invalid-feedback">
