@@ -4,7 +4,7 @@
 <h2>Selwyn Campground Add Customer </h2>
 <h3>Add new customer</h3>
 
-<form action="/customer/add" method="POST">
+<form action="/customer/add" method="POST" >
     <label for="firstname" class="form-label">Enter First name: </label>
     <input type="text" name="firstname" required />
     <label for="familyname" class="form-label">Enter Family name: </label>
@@ -14,6 +14,9 @@
     <label for="phone" class="form-label">Enter Phone number: </label>
     <input type="text" name="phone" required/>
     <input type="submit"/>
+    <div class="invalid-feedback">
+        Please enter valid data
+    </div>  
 </form>
 
 {{customerdata}}

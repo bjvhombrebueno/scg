@@ -19,12 +19,19 @@
 <input type = "hidden" name = "occupancy" value="{{occupancy}}"/>
 <div class = "col-auto">
 <label for="customer">Customer to book for</label>
-    <select name="customer" class="form-control" required>
+    <!-- <select name="customer">
+        <option selected disabled value="...">Choose customer</option>
+        {% for customer in customerlist %} 
+        <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}</option>
+        {% endfor %}
+    </select><br> -->
+
+    <select class="form-select" required aria-label="select example">
         <option selected disabled value="">Choose customer</option>
         {% for customer in customerlist %} 
         <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}</option>
         {% endfor %}
-    </select><br>
+      </select>
     <div class="invalid-feedback">
         Please select a valid customer
     </div>   
@@ -32,9 +39,20 @@
 <div class = "col-auto">
     <label for="site">Site to select</label><br>
     <!-- radio button loop -->
-    {% for site in sitelist %}
-    <input type="radio" name="site" value="{{site[0]}}" required> {{site[0]}} - {{site[1]}} occupancy </input><br>
-    {% endfor %}
+    <!-- {% for site in sitelist %}
+    <input type="radio" name="site" value="{{site[0]}}" > {{site[0]}} - {{site[1]}} occupancy </input><br>
+    {% endfor %} -->
+    
+    <div class="form-check">
+        {% for site in sitelist %}
+            
+            <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" value="{{site[0]}}" required>
+            <label class="form-check-label" for="validationFormCheck2">{{site[0]}} - {{site[1]}} occupancy </label>        
+        {% endfor %}
+        <!-- <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
+        <label class="form-check-label" for="validationFormCheck2">Toggle this radio</label> -->
+      </div>
+      
     <div class="invalid-feedback">
         Please select a camp site
     </div>
