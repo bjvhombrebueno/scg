@@ -123,7 +123,7 @@ def customer():
         customerData = connection.fetchall()
         print(request.form)
         print(customerData)
-        return render_template("customerdetails.html",customerdata =customerData)
+        return render_template("customersearch.html",customerdata =customerData)
 
 @app.route("/customer/add", methods=['GET','POST'])
 def addcustomer():
