@@ -39,19 +39,19 @@
 <div class = "col-auto">
     <label for="site">Site to select</label><br>
     <!-- radio button loop -->
-    <!-- {% for site in sitelist %}
-    <input type="radio" name="site" value="{{site[0]}}" > {{site[0]}} - {{site[1]}} occupancy </input><br>
-    {% endfor %} -->
+    {% for site in sitelist %}
+    <input type="radio" name="site" value="{{site[0]}}" required > {{site[0]}} - {{site[1]}} occupancy </input><br>
+    {% endfor %}
     
-    <div class="form-check">
+    <!-- <div class="form-check">
         {% for site in sitelist %}
             
             <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" value="{{site[0]}}" required>
             <label class="form-check-label" for="validationFormCheck2">{{site[0]}} - {{site[1]}} occupancy </label>        
         {% endfor %}
-        <!-- <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
-        <label class="form-check-label" for="validationFormCheck2">Toggle this radio</label> -->
-      </div>
+        <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
+        <label class="form-check-label" for="validationFormCheck2">Toggle this radio</label>
+      </div> -->
       
     <div class="invalid-feedback">
         Please select a camp site
