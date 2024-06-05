@@ -41,7 +41,7 @@ def campers():
         camperList = connection.fetchall()
         
         print(camperList)
-        return render_template("datepickercamper.html", camperlist = camperList)
+        return render_template("datepickercamper.html", camperlist = camperList, campdate=campDate)
         #return render_template("camperlist.html", camperlist = camperList)
 # @app.route("/campers")
 # def campers():
