@@ -7,6 +7,7 @@
 {{bookingdate}}
 {{bookingnights}}
 {{occupancy}}
+customerid={{customerid}}
 </br>
 <form action="/booking/add" method="POST" class="row needs-validation" novalidate>
 <div class = "col-auto">
@@ -28,9 +29,9 @@
 
     <!-- <select class="form-select" required aria-label="select example"> -->
     <select class="form-select" name="customer" required>
-        <option selected disabled value="">Choose customer</option>
+        <option {% if customerid is none %} selected {% endif %} disabled value="">Choose customer</option>
         {% for customer in customerlist %} 
-        <option value="{{customer[0]}}" required>{{customer[1]}} {{customer[2]}}</option>
+        <option {% if customerid|int == customer[0]|int %} selected {% endif %} value="{{customer[0]}}" required>{{customer[1]}} {{customer[2]}}</option>
         {% endfor %}
       </select>
     <div class="invalid-feedback">

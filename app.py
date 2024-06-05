@@ -52,10 +52,16 @@ def campers():
 #     return render_template("datepickercamper.html", camperlist = camperList)
 
 @app.route("/booking", methods=['GET','POST'])
-def booking():
+@app.route("/booking/<customerid>", methods=['GET','POST'])
+def booking(customerid=None):
+    print (customerid)
     if request.method == "GET":
-        return render_template("datepicker.html", currentdate = datetime.now().date())
+        print("insideget")
+        print(customerid)
+
+        return render_template("datepicker.html", currentdate = datetime.now().date(),customerid=customerid)
     else:
+        customerid=customerid
         bookingNights = request.form.get('bookingnights')
         bookingDate = request.form.get('bookingdate')
         occupancy = request.form.get('occupancy')
@@ -69,7 +75,7 @@ def booking():
         siteList = connection.fetchall()
        
         print(request.form)       
-        return render_template("bookingform.html",customerlist = customerList, bookingdate=bookingDate, sitelist = siteList, bookingnights = bookingNights,occupancy= occupancy)    
+        return render_template("bookingform.html",customerlist = customerList, bookingdate=bookingDate, sitelist = siteList, bookingnights = bookingNights,occupancy= occupancy,customerid=customerid)    
 
 @app.route("/booking/add", methods=['POST'])
 def makebooking():
