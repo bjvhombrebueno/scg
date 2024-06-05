@@ -181,8 +181,10 @@ def mycustomer():
         print(request.form)
         customerId = request.form.get('customerid')
         if request.form.get('Edit'):
-
-            return render_template("mycustomeredit.html",customerid =customerId)    
+            connection = getCursor()
+            connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
+            customerData = connection.fetchone()
+            return render_template("mycustomeredit.html",customerid =customerId, customerdata= customerData)    
         else:
             connection = getCursor()
             connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
