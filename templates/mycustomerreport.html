@@ -3,12 +3,32 @@
 <!-- code in here to display a list of books-->
 <h2>Selwyn Campground - MyCustomer Report</h2>
     <h3>Report for customer {{customerdata[0][0]}}-{{customerdata[0][1]}} {{customerdata[0][2]}}</h3>
-<br>
+<!-- {{customerbookingdata}} -->
+    
+{% if customerbookingdata %}
     Stats:
-    Total Nights Booked: {{totalnightsbooked}}
-    Average Occupancy: {{averageoccupancy}}
-    <p>{{customerbookingdata}}</p>
-    hello
-</br>
+    <br>Total Nights Booked: {{totalnightsbooked}}
+    <br>Average Occupancy: {{averageoccupancy}}
+    <div class="col-auto">
+        <table class="table table-hover">
+            <thead>
+                <tr><th>Site</th><th>Booking Date</th><th>Occupancy</th></tr>
+            </thead>
+            {% for data in customerbookingdata %}
+                <tr>
+                    <td>{{data[1]}}</td>
+                    <td>{{data[3]}}</td>
+                    <td>{{data[4]}}</td>
+                </tr>  
+            {% endfor %}
+        </table>
+    </div>
+    
+{% else %}
+    No bookings found
+{% endif %}
+
+    
+
 
 {% endblock %}
