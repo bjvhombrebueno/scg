@@ -4,7 +4,8 @@
 <h2>Selwyn Campground - Make a booking</h2>
 <h3>Choose the date you'd like the booking to start on.</h3>
 {% if customerid %}
-    <form action="/booking/{{customerid}}" method="POST" class="row needs-validation" novalidate>
+    <!-- <form action="/booking/{{customerid}}" method="POST" class="row needs-validation" novalidate> -->
+    <form action="/bookingget/?customerid={{customerid}}" method="POST" class="row needs-validation" novalidate>
 {% else %}
     <form action="{{url_for('booking')}}" method="POST" class="row needs-validation" novalidate>        
 {% endif %}

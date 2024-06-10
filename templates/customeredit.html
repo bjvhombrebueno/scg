@@ -6,9 +6,9 @@
 
 
 <form action="/customer/edit" method="POST">
-<!-- <input type = "hidden" name = "customerid" value="{{customerid}}"/> -->
+<input type = "hidden" name = "customerid" value="{{customerid}}"/>
 
-<input type="text" name="firstname"/>
+<input type="text" name="firstname" {% if customerid %} value="{{[1]}}" {% endif %}/>
 <input type="text" name="familyname"/>
 <input type="text" name="email"/>
 <input type="text" name="phone"/>

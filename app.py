@@ -53,6 +53,7 @@ def campers():
 
 @app.route("/booking", methods=['GET','POST'])
 @app.route("/booking/<customerid>", methods=['GET','POST'])
+@app.route("/bookingget/?customerid=<customerid>", methods=['GET','POST'])
 def booking(customerid=None):
     print (customerid)
     if request.method == "GET":
@@ -61,6 +62,9 @@ def booking(customerid=None):
 
         return render_template("datepicker.html", currentdate = datetime.now().date(),customerid=customerid)
     else:
+        
+        print("inside post")
+        print(customerid)
         customerid=customerid
         bookingNights = request.form.get('bookingnights')
         bookingDate = request.form.get('bookingdate')
@@ -76,6 +80,14 @@ def booking(customerid=None):
        
         print(request.form)       
         return render_template("bookingform.html",customerlist = customerList, bookingdate=bookingDate, sitelist = siteList, bookingnights = bookingNights,occupancy= occupancy,customerid=customerid)    
+
+@app.route("/bookingget/", methods=['GET','POST'] )
+def bookingdetailsget():
+    print(request.args)
+    return booking(request.args['customerid'])
+
+
+
 
 @app.route("/booking/add", methods=['POST'])
 def makebooking():
