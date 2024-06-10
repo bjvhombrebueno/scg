@@ -1,20 +1,26 @@
 {% extends "enterdetails.html" %}
 {% block content %}
-Changes saved
+
+{% if flagfirstname and flagfamilyname and flagemail and flagphone %}
+    Changes saved
+{% else %}
+    Changes not saved
+{% endif %}
+
 <h5>
     {% if customerid %} Customer = {{customerid}} {% endif %}
 </h5><br>
 <h5>
-    First Name = {{firstname}}
+    First Name = {% if flagfirstname %} {{firstname}} {% else %} Invalid entry {% endif %}
 </h5><br>
 <h5>
-    Family Name = {{familyname}}
+    Family Name = {% if flagfamilyname %} {{familyname}} {% else %} Invalid entry {% endif %}
 </h5><br>
 <h5>
-    Email Address =  {{email}}
+    Email Address =  {% if flagemail %} {{email}} {% else %} Invalid entry {% endif %}
 </h5><br>
 <h5>
-    Phone = {{phone}}
+    Phone = {% if flagphone %} {{phone}}  {% else %} Invalid entry {% endif %}
 </h5><br>
 
 

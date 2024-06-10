@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import url_for
+from flask import flash
 import re
 from datetime import datetime
 from datetime import date
@@ -24,6 +25,32 @@ def getCursor():
     database=connect.dbname, autocommit=True)
     dbconn = connection.cursor()
     return dbconn
+
+
+def is_valid_firstname(firstname):
+    # Check if firstname matches the format
+    if not re.search(r"(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)", firstname):
+        return False
+    return True
+
+def is_valid_familyname(familyname):
+    # Check if familyname matches the format
+    if not re.search(r"(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)", familyname):
+        return False
+    return True
+
+def is_valid_email(email):
+    # Check if email matches the format
+    if not re.match(r"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", email):
+        return False
+    return True
+
+def is_valid_phone(phone):
+    # Check if phone matches the format
+    if not re.match(r"^0\d{8,10}$", phone):
+        return False
+    return True
+
 
 @app.route("/")
 def home():
@@ -156,10 +183,16 @@ def addcustomer():
             familyName = request.form.get('familyname')
             email = request.form.get('email')
             phone = request.form.get('phone')
-            connection = getCursor()
-            connection.execute("INSERT INTO customers (firstname, familyname, email, phone) VALUES(%s,%s,%s,%s);",(firstName, familyName, email, phone,))
-            
-            return render_template("enterdetailsconfirmation.html", firstname = firstName, familyname=familyName, email = email, phone = phone)
+            flagFirstName = is_valid_firstname(firstName)
+            flagFamilyName = is_valid_familyname(familyName)
+            flagEmail = is_valid_email(email)
+            flagPhone = is_valid_phone(phone)
+            if (is_valid_firstname(firstName) and is_valid_familyname(familyName) and is_valid_email(email) and is_valid_phone(phone)):
+                connection = getCursor()
+                connection.execute("INSERT INTO customers (firstname, familyname, email, phone) VALUES(%s,%s,%s,%s);",(firstName, familyName, email, phone,))
+            else:
+                pass
+            return render_template("enterdetailsconfirmation.html", firstname = firstName, familyname=familyName, email = email, phone = phone,flagfirstname = flagFirstName, flagfamilyname = flagFamilyName, flagemail= flagEmail, flagphone =flagPhone)
 
 # @app.route("/customer/edit", methods=['GET','POST'])
 # def editcustomer():
@@ -234,6 +267,9 @@ def mycustomeredit():
     print(phone)
     # newBookingId = bookingId[0][0]+1
     # print(newBookingId)
+    flagEmail = is_valid_email(email)
+    print(firstName)
+    print(flagEmail)
 
     connection.execute("UPDATE customers SET firstname = %s, familyname = %s, email = %s, phone = %s WHERE customer_id = %s;"
 ,(firstName, familyName, email, phone,customerId,))

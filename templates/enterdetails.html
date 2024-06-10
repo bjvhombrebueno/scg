@@ -2,11 +2,15 @@
 
 {% block content %}
 
+ the flagemail is {{flagemail}}
+  
 
 {% if customerid %}
-    <form action="/mycustomer/edit" method="POST" class="row needs-validation" novalidate>
+    <!-- <form action="/mycustomer/edit" method="POST" class="row needs-validation" novalidate> -->
+    <form action="/mycustomer/edit" method="POST" class="row needs-validation">
 {% else %}
-    <form action="/customer/add" method="POST" class="row needs-validation" novalidate>
+    <!-- <form action="/customer/add" method="POST" class="row needs-validation" novalidate> -->
+    <form action="/customer/add" method="POST" class="row needs-validation">
 {% endif %}
         
         <input type = "hidden" name = "customerid" value="{{customerid}}"/>
@@ -15,7 +19,7 @@
         
         <div class="col-auto">
             <label for="firstname" class="form-label">First name: </label>
-            <input type="text" class="form-control" name="firstname" {% if customerdata %} value="{{customerdata[1]}}" {% endif %} required />
+            <input type="text" class="form-control" name="firstname" {% if customerdata %} value="{{customerdata[1]}}" {% endif %} pattern= "(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)" required />
             <div class="invalid-feedback">
                 Please enter valid first name
             </div>  
@@ -23,22 +27,45 @@
 
         <div class="col-auto">
             <label for="familyname" class="form-label">Family name: </label>
-            <input type="text" class="form-control" name="familyname" {% if customerdata %} value="{{customerdata[2]}}" {% endif %} required/>
+            <input type="text" class="form-control" name="familyname" {% if customerdata %} value="{{customerdata[2]}}" {% endif %} pattern="(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)" required />
             <div class="invalid-feedback">
                 Please enter valid family name
             </div>  
         </div>
+        {% if flagemail == True %}
+            <div class="col-auto">
+                <label for="email" class="form-label">Email Address: </label>
+                
+                <!-- <input name="email" type="email" id="typeEmail" class="form-control" required/> -->
+                <!-- <input name="email" type="email" id="typeEmail" class="form-control is-valid" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/> -->
+                <input name="email" type="email" id="typeEmail" class="form-control"  {% if customerdata %} value="{{customerdata[3]}}" {% endif %} pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+                <!-- <div class="valid-feedback">
+                    OK
+                </div>   -->
+            </div>
+        {% else %}
+            <div class="col-auto">
+                <label for="email" class="form-label">Email Address: </label>
+                
+                <!-- <input name="email" type="email" id="typeEmail" class="form-control" required/> -->
+                <!-- <input name="email" type="email" id="typeEmail" class="form-control is-invalid" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/> -->
+                <input name="email" type="email" id="typeEmail" class="form-control"  {% if customerdata %} value="{{customerdata[3]}}" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" {% endif %} required/>
+                <!-- <div class="invalid-feedback">
+                    Please enter valid email address
+                </div>   -->
+            </div>
+        {% endif %}
 
-        <div class="col-auto">
+        <!-- <div class="col-auto">
             <label for="email" class="form-label">Email Address: </label>
             
-            <!-- <input name="email" type="email" id="typeEmail" class="form-control" required/> -->
-            <!-- <input name="email" type="email" id="typeEmail" class="form-control" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/> -->
-            <input name="email" type="email" id="typeEmail" class="form-control" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" {% if customerdata %} value="{{customerdata[3]}}" {% endif %} required/>
+            <input name="email" type="email" id="typeEmail" class="form-control" required/>
+            <input name="email" type="email" id="typeEmail" class="form-control" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+            <input name="email" type="email" id="typeEmail" class="form-control is-invalid" id="validationServer01" {% if customerdata %} value="{{customerdata[3]}}" {% endif %} required/>
             <div class="invalid-feedback">
                 Please enter valid email address
             </div>  
-        </div>
+        </div> -->
 
         <div class="col-auto">
             <label for="phone" class="form-label">Phone number: </label>
