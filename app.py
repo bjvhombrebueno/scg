@@ -150,7 +150,7 @@ def customer():
 @app.route("/customer/add", methods=['GET','POST'])
 def addcustomer():
          if request.method == "GET":
-            return render_template("customeradd.html")
+            return render_template("enterdetails.html")
          else:
             firstName = request.form.get('firstname')
             familyName = request.form.get('familyname')
@@ -159,7 +159,7 @@ def addcustomer():
             connection = getCursor()
             connection.execute("INSERT INTO customers (firstname, familyname, email, phone) VALUES(%s,%s,%s,%s);",(firstName, familyName, email, phone,))
             
-            return render_template("customeradd.html")
+            return render_template("enterdetailsconfirmation.html", firstname = firstName, familyname=familyName, email = email, phone = phone)
 
 # @app.route("/customer/edit", methods=['GET','POST'])
 # def editcustomer():
@@ -200,7 +200,8 @@ def mycustomer():
             connection = getCursor()
             connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
             customerData = connection.fetchone()
-            return render_template("mycustomeredit.html",customerid =customerId, customerdata= customerData)    
+            # return render_template("mycustomeredit.html",customerid =customerId, customerdata= customerData)    
+            return render_template("enterdetails.html",customerid =customerId, customerdata= customerData)    
         else:
             connection = getCursor()
             connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
@@ -236,7 +237,8 @@ def mycustomeredit():
 
     connection.execute("UPDATE customers SET firstname = %s, familyname = %s, email = %s, phone = %s WHERE customer_id = %s;"
 ,(firstName, familyName, email, phone,customerId,))
-    return redirect('/customer/search')
+    # return redirect('/customer/search')
+    return render_template("enterdetailsconfirmation.html",customerid =customerId, firstname=firstName,familyname=familyName, email = email, phone=phone)
 
 @app.route("/mycustomer/report", methods=['POST'])
 def mycustomerreport():

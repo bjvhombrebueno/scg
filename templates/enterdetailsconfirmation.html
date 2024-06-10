@@ -1,0 +1,24 @@
+{% extends "enterdetails.html" %}
+{% block content %}
+Changes saved
+<h5>
+    {% if customerid %} Customer = {{customerid}} {% endif %}
+</h5><br>
+<h5>
+    First Name = {{firstname}}
+</h5><br>
+<h5>
+    Family Name = {{familyname}}
+</h5><br>
+<h5>
+    Email Address =  {{email}}
+</h5><br>
+<h5>
+    Phone = {{phone}}
+</h5><br>
+
+
+
+
+
+{% endblock %}

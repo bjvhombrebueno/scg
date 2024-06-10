@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+{% if customerid %}
+    <form action="/mycustomer/edit" method="POST" class="row needs-validation" novalidate>
+{% else %}
+    <form action="/customer/add" method="POST" class="row needs-validation" novalidate>
+{% endif %}
+        
+        <input type = "hidden" name = "customerid" value="{{customerid}}"/>
+
+        
+        
+        <div class="col-auto">
+            <label for="firstname" class="form-label">First name: </label>
+            <input type="text" class="form-control" name="firstname" {% if customerdata %} value="{{customerdata[1]}}" {% endif %} required />
+            <div class="invalid-feedback">
+                Please enter valid first name
+            </div>  
+        </div>
+
+        <div class="col-auto">
+            <label for="familyname" class="form-label">Family name: </label>
+            <input type="text" class="form-control" name="familyname" {% if customerdata %} value="{{customerdata[2]}}" {% endif %} required/>
+            <div class="invalid-feedback">
+                Please enter valid family name
+            </div>  
+        </div>
+
+        <div class="col-auto">
+            <label for="email" class="form-label">Email Address: </label>
+            
+            <!-- <input name="email" type="email" id="typeEmail" class="form-control" required/> -->
+            <!-- <input name="email" type="email" id="typeEmail" class="form-control" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/> -->
+            <input name="email" type="email" id="typeEmail" class="form-control" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" {% if customerdata %} value="{{customerdata[3]}}" {% endif %} required/>
+            <div class="invalid-feedback">
+                Please enter valid email address
+            </div>  
+        </div>
+
+        <div class="col-auto">
+            <label for="phone" class="form-label">Phone number: </label>
+            <input name="phone" class="form-control" type="tel" pattern = "^0\d{8,10}$" {% if customerdata %} value="{{customerdata[4]}}" {% endif %} required/>
+            <div class="invalid-feedback">
+                Please enter valid phone number
+            </div>  
+        </div>
+         
+        <div class = "col-auto">
+            <input type="submit"/>
+        </div>  
+    </form>
+
+
+
+<!-- {{customerdata}} -->
+
+{% endblock %}
