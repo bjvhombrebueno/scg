@@ -5,19 +5,25 @@
 <!-- Insert code to loop over the list of campers and display them -->
 
 <!-- {{camperlist}} -->
+<h3>Date Selected: {{campdate}}</h3><br>
+{% if camperlist %}
+    <table class="table table-hover">
+        <thead>
+        <!-- <tr><th>Booking ID</th><th>First Name</th><th>Family Name</th><th>Site ID</th><th>Occupancy</th></tr> -->
+        <tr><th>First Name</th><th>Family Name</th><th>Site ID</th><th>Occupancy</th></tr>
+        </thead>
+        {% for camper in camperlist%}
+            <tr>
+                <!-- <td>{{camper[0]}}</td> -->
+                <td>{{camper[8]}}</td>
+                <td>{{camper[9]}}</td>
+                <td>{{camper[1]}}</td>
+                <td>{{camper[4]}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else%}
+    No campers on that date
+{% endif %}
 
-<table class="table table-hover">
-    <thead>
-    <tr><th>Booking ID</th><th>First Name</th><th>Family Name</th><th>Site ID</th><th>Occupancy</th></tr>
-</thead>
-    {% for camper in camperlist%}
-        <tr>
-            <td>{{camper[0]}}</td>
-            <td>{{camper[8]}}</td>
-            <td>{{camper[9]}}</td>
-            <td>{{camper[1]}}</td>
-            <td>{{camper[4]}}</td>
-        </tr>
-    {% endfor %}
-</table>
 {% endblock %}

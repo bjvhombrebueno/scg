@@ -100,9 +100,10 @@ def makebooking():
     occupancy = request.form.get('occupancy')
     # bookingid = bookingIdList
     connection = getCursor()
-    # connection.execute("SELECT max(booking_id) FROM scg.bookings;")
-    # bookingId = connection.fetchall()
+    connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customer),))
+    customerData = connection.fetchone()
     print(customer)
+    print(customerData)
     print(site)
     print(bookingDate)
     print(bookingNights)
@@ -112,7 +113,10 @@ def makebooking():
     for i in range(0,int(bookingNights)):
         connection.execute("INSERT INTO bookings (site, customer, booking_date, occupancy) VALUES(%s,%s,%s,%s);",(site, customer, str(bookingDate), occupancy,))
         bookingDate = bookingDate +timedelta(days=1)
-    return redirect("/campers")
+    bookingDate = bookingDate -timedelta(days=int(bookingNights))
+    
+    return render_template("/bookingconfirmation.html",customerdata=customerData, site = site, bookingdate = bookingDate, bookingnights = bookingNights, occupancy=occupancy )
+    # return redirect("/campers")
 
 # @app.route("/customer", methods=['GET','POST'])
 # def customer():

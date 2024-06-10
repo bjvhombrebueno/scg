@@ -19,27 +19,37 @@
     </div>
     
 </form>
-{% if customerdata %}
+{% if request.method=="POST" %}
+
+
+    {% if customerdata %}
     
-    
-    <table class="table table-hover">
-        <thead>
-        <tr><th>Customer ID</th><th>First Name</th><th>Family Name</th><th>Email Address</th><th>Phone Number</th></tr>
-    </thead>
-        {% for customer in customerdata %}
-            <tr>
-                <td>{{customer[0]}}</td>
-                <td>{{customer[1]}}</td>
-                <td>{{customer[2]}}</td>
-                <td>{{customer[3]}}</td>
-                <td>{{customer[4]}}</td>
-                <!-- <td><a href="/booking/{{customer[0]}}">Make a booking</a></td> -->
-                <td><a href="/bookingget/?customerid={{customer[0]}}">Make a booking</a></td>
-            </tr>  
-        {% endfor %}
-    </table>
+
+        <table class="table table-hover">
+            <thead>
+                <tr><th>Customer ID</th><th>First Name</th><th>Family Name</th><th>Email Address</th><th>Phone Number</th></tr>
+            </thead>
+            {% for customer in customerdata %}
+                <tr>
+                    <td>{{customer[0]}}</td>
+                    <td>{{customer[1]}}</td>
+                    <td>{{customer[2]}}</td>
+                    <td>{{customer[3]}}</td>
+                    <td>{{customer[4]}}</td>
+                    <!-- <td><a href="/booking/{{customer[0]}}">Make a booking</a></td> -->
+                    <td><a href="/bookingget/?customerid={{customer[0]}}">Make a booking</a></td>
+                </tr>  
+            {% endfor %}
+        </table>
+    {% else %}
+        No search results found
+    {% endif %}
+
 {% else %}
-    No search results found
+
+
 {% endif %}
+
+
 
 {% endblock %}

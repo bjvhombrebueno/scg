@@ -23,14 +23,16 @@
         <label for="email" class="form-label">Enter Email Address: </label>
         
         <!-- <input name="email" type="email" id="typeEmail" class="form-control" required/> -->
-        <input name="email" type="email" id="typeEmail" class="form-control" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+        <!-- <input name="email" type="email" id="typeEmail" class="form-control" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/> -->
+        <input name="email" type="text" id="typeEmail" class="form-control" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required/>
+        
         <div class="invalid-feedback">
             Please enter valid email address
         </div>  
     </div>
     <div class="col-auto">
         <label for="phone" class="form-label">Enter Phone number: </label>
-        <input name="phone" class="form-control" type="tel" required/>
+        <input name="phone" class="form-control" type="tel" pattern = "^0\d{8,10}$" required/>
         <div class="invalid-feedback">
             Please enter valid phone number
         </div>  
@@ -45,6 +47,6 @@
     
 </form>
 
-{{customerdata}}
+
 
 {% endblock %}
