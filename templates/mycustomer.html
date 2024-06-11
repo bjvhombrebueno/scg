@@ -4,7 +4,14 @@
 <h2>Selwyn Campground -MyCustomer</h2>
 <h3>Choose the customer</h3>
 
-<form action="/mycustomer" method="POST">
+{% if customerid %}
+    <!-- <form action="/booking/{{customerid}}" method="POST" class="row needs-validation" novalidate> -->
+    <form action="/mycustomerget/?customerid={{customerid}}" method="POST" class="row needs-validation" novalidate>
+{% else %}
+    <form action="/mycustomer" method="POST" class="row needs-validation" novalidate>        
+{% endif %}
+
+<!-- <form action="/mycustomer" method="POST"> -->
     <div class="container text-center">
         <div class = "row justify-content-center">
             <div class = "col-auto">
@@ -12,7 +19,8 @@
                 <select class="form-select" name="customerid" required>
                     <option {% if customerid is none %} selected {% endif %} disabled value="">Choose customer</option>    
                     {% for customer in customerdata %}
-                        <option value="{{customer[0]}}">{{customer[2]}}, {{customer[1]}}</option>
+                        <option {% if customerid|int == customer[0]|int %} selected {% endif %} value="{{customer[0]}}" required>{{customer[2]}}, {{customer[1]}}</option>
+                        <!-- <option value="{{customer[0]}}">{{customer[2]}}, {{customer[1]}}</option> -->
                     {% endfor %}
                 </select>
                 <div class="invalid-feedback">

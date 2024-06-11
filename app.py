@@ -219,12 +219,13 @@ def addcustomer():
 
 
 @app.route("/mycustomer", methods=['GET','POST'])
-def mycustomer():
+@app.route("/mycustomerget/?customerid=<customerid>", methods=['GET','POST'])
+def mycustomer(customerid=None):
     if request.method == "GET":
         connection = getCursor()
         connection.execute("SELECT * FROM customers ORDER BY familyname;")
         customerData = connection.fetchall()
-        return render_template("mycustomer.html",customerdata = customerData)
+        return render_template("mycustomer.html",customerdata = customerData, customerid=customerid)
     else:
         print(request.args)
         print(request.form)
@@ -302,3 +303,8 @@ def mycustomerreport():
 # ,(firstName, familyName, email, phone,customerId,))
     pass
     return render_template("mycustomerreport.html")
+
+@app.route("/mycustomerget/", methods=['GET','POST'] )
+def mycustomerget():
+    print(request.args)
+    return mycustomer(request.args['customerid'])
