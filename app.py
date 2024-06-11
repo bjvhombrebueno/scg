@@ -175,7 +175,7 @@ def customersearch():
         return render_template("customersearch.html",customerdata =customerData)
 
 @app.route("/customer/add", methods=['GET','POST'])
-def addcustomer():
+def customeradd():
          if request.method == "GET":
             return render_template("enterdetails.html")
          else:
@@ -279,29 +279,9 @@ def mycustomeredit():
 
     return render_template("enterdetailsconfirmation.html",customerid =customerId, firstname=firstName,familyname=familyName, email = email, phone=phone, flagfirstname = flagFirstName, flagfamilyname = flagFamilyName, flagemail= flagEmail, flagphone =flagPhone)
 
-@app.route("/mycustomer/report", methods=['POST'])
-def mycustomerreport():
-#     print(request.args)
-#     print(request.form)
-#     customerId = request.form.get('customerid')
-#     firstName = request.form.get('firstname')
-#     familyName = request.form.get('familyname')
-#     email = request.form.get('email')
-#     phone = request.form.get('phone')       
-#     connection = getCursor()
-#     # connection.execute("SELECT max(booking_id) FROM scg.bookings;")
-#     # bookingId = connection.fetchall()
-#     print(request.form['customerid'])
-#     print(firstName)
-#     print(familyName)
-#     print(email)
-#     print(phone)
-#     # newBookingId = bookingId[0][0]+1
-#     # print(newBookingId)
+@app.route("/mycustomer/report", methods=['GET','POST'])
+def mycustomerreport(customerid=None):
 
-#     connection.execute("UPDATE customers SET firstname = %s, familyname = %s, email = %s, phone = %s WHERE customer_id = %s;"
-# ,(firstName, familyName, email, phone,customerId,))
-    pass
     return render_template("mycustomerreport.html")
 
 @app.route("/mycustomerget/", methods=['GET','POST'] )

@@ -61,6 +61,12 @@
                             <div class = "col-auto">
                                 <th>Phone Number</th>
                             </div>
+                            <div class = "col-auto">
+                                <th>Make a booking</th>
+                            </div>
+                            <div class = "col-auto">
+                                <th>Go to MyCustomer Page</th>
+                            </div>
                         </tr>
                     </thead>
                     {% for customer in customerdata %}
@@ -78,10 +84,10 @@
                                 <td>{{customer[4]}}</td>
                             </div>
                             <div class = "col-auto">
-                                <td><a href="/bookingget/?customerid={{customer[0]}}">Make a booking</a></td>
+                                <td><a href="/bookingget/?customerid={{customer[0]}}" type="button" class="btn btn-secondary">Link</a></td>
                             </div>
                             <div class = "col-auto">
-                                <td><a href="/mycustomerget/?customerid={{customer[0]}}">Go to MyCustomer Page</a></td>
+                                <td><a href="/mycustomerget/?customerid={{customer[0]}}" type="button" class="btn btn-secondary">Link</a></td>
                             </div>
                             
                         </tr>
@@ -116,6 +122,7 @@
             {% endfor %}
         </table> -->
     {% else %}
+        <br>
         <h5>No search results found</h5>
     {% endif %}
 
