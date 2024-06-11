@@ -159,7 +159,7 @@ def makebooking():
         
 
 @app.route("/customer/search", methods=['GET','POST'])
-def customer():
+def customersearch():
      if request.method == "GET":
         return render_template("customersearch.html")
      else:
