@@ -6,12 +6,12 @@
 
 {% if customerid %}
     <!-- <form action="/booking/{{customerid}}" method="POST" class="row needs-validation" novalidate> -->
-    <form action="/mycustomerget/?customerid={{customerid}}" method="POST" class="row needs-validation" novalidate>
+    <form action="/customerhomeget/?customerid={{customerid}}" method="POST" class="row needs-validation" novalidate>
 {% else %}
-    <form action="/mycustomer" method="POST" class="row needs-validation" novalidate>        
+    <form action="/customerhome" method="POST" class="row needs-validation" novalidate>        
 {% endif %}
 
-<!-- <form action="/mycustomer" method="POST"> -->
+<!-- <form action="/customerhome" method="POST"> -->
     <div class="container text-center">
         <div class = "row justify-content-center">
             <div class = "col-auto">
@@ -55,7 +55,7 @@
         
     </select> -->
     <!-- <button type="submit">Edit</button>
-    <button type="submit" formaction="/mycustomer/report">Report</button> -->
+    <button type="submit" formaction="/customerhome/report">Report</button> -->
     <!-- <input type="submit" name="Edit" value="Edit">
     <input type="submit" name="Report" value="Report"> -->
 </form>

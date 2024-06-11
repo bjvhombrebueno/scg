@@ -54,7 +54,6 @@ def is_valid_phone(phone):
 
 @app.route("/")
 def home():
-    # return render_template("base.html")
     return render_template("home.html")
 
 @app.route("/campers", methods=['GET','POST'])
@@ -166,7 +165,7 @@ def customersearch():
      else:
         customerName = request.form.get('customername')
         # customerNameEdited =  customerName
-        sql= "SELECT * FROM customers WHERE firstname LIKE '%"+ customerName + "%' ORDER BY familyname;"
+        sql= "SELECT * FROM customers WHERE firstname LIKE '%"+ customerName + "%' OR familyname LIKE '%"+ customerName + "%' ORDER BY familyname;"
         print(sql)
         connection = getCursor()
         connection.execute(sql)
@@ -219,14 +218,14 @@ def customeradd():
 #             return render_template("customeredit.html")
 
 
-@app.route("/mycustomer", methods=['GET','POST'])
-@app.route("/mycustomerget/?customerid=<customerid>", methods=['GET','POST'])
-def mycustomer(customerid=None):
+@app.route("/customerhome", methods=['GET','POST'])
+@app.route("/customerhomeget/?customerid=<customerid>", methods=['GET','POST'])
+def customerhome(customerid=None):
     if request.method == "GET":
         connection = getCursor()
         connection.execute("SELECT * FROM customers ORDER BY familyname;")
         customerData = connection.fetchall()
-        return render_template("mycustomer.html",customerdata = customerData, customerid=customerid)
+        return render_template("customerhome.html",customerdata = customerData, customerid=customerid)
     else:
         print(request.args)
         print(request.form)
@@ -235,7 +234,7 @@ def mycustomer(customerid=None):
             connection = getCursor()
             connection.execute("SELECT * FROM customers WHERE customer_id = %s ORDER BY familyname;", (int(customerId),))
             customerData = connection.fetchone()
-            # return render_template("mycustomeredit.html",customerid =customerId, customerdata= customerData)    
+            # return render_template("customerhomeedit.html",customerid =customerId, customerdata= customerData)    
             return render_template("enterdetails.html",customerid =customerId, customerdata= customerData)    
         else:
             connection = getCursor()
@@ -248,10 +247,10 @@ def mycustomer(customerid=None):
             connection.execute("SELECT AVG(occupancy) FROM bookings WHERE customer = %s;", (int(customerId),))
             averageOccupancy = connection.fetchall()[0][0]
 
-            return render_template("mycustomerreport.html",customerid = customerId, customerdata = customerData, customerbookingdata =customerBookingData, totalnightsbooked = totalNightsBooked,averageoccupancy = averageOccupancy)
+            return render_template("customerreport.html",customerid = customerId, customerdata = customerData, customerbookingdata =customerBookingData, totalnightsbooked = totalNightsBooked,averageoccupancy = averageOccupancy)
         
-@app.route("/mycustomer/edit", methods=['POST'])
-def mycustomeredit():
+@app.route("/customerhome/edit", methods=['POST'])
+def customerhomeedit():
     print(request.args)
     print(request.form)
     customerId = request.form.get('customerid')
@@ -280,12 +279,12 @@ def mycustomeredit():
 
     return render_template("enterdetailsconfirmation.html",customerid =customerId, firstname=firstName,familyname=familyName, email = email, phone=phone, flagfirstname = flagFirstName, flagfamilyname = flagFamilyName, flagemail= flagEmail, flagphone =flagPhone)
 
-@app.route("/mycustomer/report", methods=['GET','POST'])
-def mycustomerreport(customerid=None):
+@app.route("/customerhome/report", methods=['GET','POST'])
+def customerreport(customerid=None):
 
-    return render_template("mycustomerreport.html")
+    return render_template("customerreport.html")
 
-@app.route("/mycustomerget/", methods=['GET','POST'] )
-def mycustomerget():
+@app.route("/customerhomeget/", methods=['GET','POST'] )
+def customerhomeget():
     print(request.args)
-    return mycustomer(request.args['customerid'])
+    return customerhome(request.args['customerid'])
