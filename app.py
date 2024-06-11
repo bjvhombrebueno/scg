@@ -257,7 +257,7 @@ def mycustomeredit():
     familyName = request.form.get('familyname')
     email = request.form.get('email')
     phone = request.form.get('phone')       
-    connection = getCursor()
+    
     # connection.execute("SELECT max(booking_id) FROM scg.bookings;")
     # bookingId = connection.fetchall()
     print(request.form['customerid'])
@@ -265,16 +265,18 @@ def mycustomeredit():
     print(familyName)
     print(email)
     print(phone)
-    # newBookingId = bookingId[0][0]+1
-    # print(newBookingId)
+    flagFirstName = is_valid_firstname(firstName)
+    flagFamilyName = is_valid_familyname(familyName)
     flagEmail = is_valid_email(email)
-    print(firstName)
-    print(flagEmail)
+    flagPhone = is_valid_phone(phone)
 
-    connection.execute("UPDATE customers SET firstname = %s, familyname = %s, email = %s, phone = %s WHERE customer_id = %s;"
-,(firstName, familyName, email, phone,customerId,))
-    # return redirect('/customer/search')
-    return render_template("enterdetailsconfirmation.html",customerid =customerId, firstname=firstName,familyname=familyName, email = email, phone=phone)
+    if (is_valid_firstname(firstName) and is_valid_familyname(familyName) and is_valid_email(email) and is_valid_phone(phone)):
+        connection = getCursor()
+        connection.execute("UPDATE customers SET firstname = %s, familyname = %s, email = %s, phone = %s WHERE customer_id = %s;", (firstName, familyName, email, phone,customerId,))
+    else:
+        pass
+
+    return render_template("enterdetailsconfirmation.html",customerid =customerId, firstname=firstName,familyname=familyName, email = email, phone=phone, flagfirstname = flagFirstName, flagfamilyname = flagFamilyName, flagemail= flagEmail, flagphone =flagPhone)
 
 @app.route("/mycustomer/report", methods=['POST'])
 def mycustomerreport():
