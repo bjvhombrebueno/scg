@@ -4,67 +4,70 @@
 <h2>Selwyn Campground - Make a booking</h2>
 <p>
 <br>
-{{bookingdate}}
+<!-- {{bookingdate}}
 {{bookingnights}}
 {{occupancy}}
-customerid={{customerid}}
+customerid={{customerid}} -->
 </br>
 <form action="/booking/add" method="POST" class="row needs-validation" novalidate>
-<div class = "col-auto">
-    <label for="bookingdate">Start Date to be booked</label>
-    <input type="text" enabled="false" name="bookingdate" value="{{bookingdate}}"/>
-</div>
 
-<br>
-<input type = "hidden" name = "bookingnights" value="{{bookingnights}}"/>
-<input type = "hidden" name = "occupancy" value="{{occupancy}}"/>
-<div class = "col-auto">
-<label for="customer">Customer to book for</label>
-    <!-- <select name="customer">
-        <option selected disabled value="...">Choose customer</option>
-        {% for customer in customerlist %} 
-        <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}</option>
-        {% endfor %}
-    </select><br> -->
-
-    <!-- <select class="form-select" required aria-label="select example"> -->
-    <select class="form-select" name="customer" required>
-        <option {% if customerid is none %} selected {% endif %} disabled value="">Choose customer</option>
-        {% for customer in customerlist %} 
-        <option {% if customerid|int == customer[0]|int %} selected {% endif %} value="{{customer[0]}}" required>{{customer[1]}} {{customer[2]}}</option>
-        {% endfor %}
-      </select>
-    <div class="invalid-feedback">
-        Please select a valid customer
-    </div>   
-</div>
-<div class = "col-auto">
-    <label for="site">Site to select</label><br>
-    <!-- radio button loop -->
-    {% for site in sitelist %}
-    <input type="radio" name="site" value="{{site[0]}}" required > {{site[0]}} - {{site[1]}} occupancy </input><br>
-    {% endfor %}
-    
-    <!-- <div class="form-check">
-        {% for site in sitelist %}
-            
-            <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" value="{{site[0]}}" required>
-            <label class="form-check-label" for="validationFormCheck2">{{site[0]}} - {{site[1]}} occupancy </label>        
-        {% endfor %}
-        <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
-        <label class="form-check-label" for="validationFormCheck2">Toggle this radio</label>
-      </div> -->
-      
-    <div class="invalid-feedback">
-        Please select a camp site
+    <div class="container text-center">
+        <div class = "row justify-content-center">
+            <div class = "col-auto">
+                <label for="bookingdate">Start Date to be booked</label><br>
+                <input type="text" enabled="false" name="bookingdate" value="{{bookingdate}}"/>
+            </div>
+            <br>
+            <input type = "hidden" name = "bookingnights" value="{{bookingnights}}"/>
+            <input type = "hidden" name = "occupancy" value="{{occupancy}}"/>
+            <div class = "col-auto">
+                <label for="customer">Customer to book for</label><br>
+                    <!-- <select name="customer">
+                        <option selected disabled value="...">Choose customer</option>
+                        {% for customer in customerlist %} 
+                        <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}</option>
+                        {% endfor %}
+                    </select><br> -->
+                
+                    <!-- <select class="form-select" required aria-label="select example"> -->
+                    <select class="form-select" name="customer" required>
+                        <option {% if customerid is none %} selected {% endif %} disabled value="">Choose customer</option>
+                        {% for customer in customerlist %} 
+                        <option {% if customerid|int == customer[0]|int %} selected {% endif %} value="{{customer[0]}}" required>{{customer[1]}} {{customer[2]}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid customer
+                    </div>   
+                </div>
+                <div class = "col-auto">
+                    <label for="site">Site to select</label><br>
+                    <!-- radio button loop -->
+                    {% for site in sitelist %}
+                    <input type="radio" name="site" value="{{site[0]}}" required > {{site[0]}} - {{site[1]}} occupancy </input><br>
+                    {% endfor %}
+                    
+                    <!-- <div class="form-check">
+                        {% for site in sitelist %}
+                            
+                            <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" value="{{site[0]}}" required>
+                            <label class="form-check-label" for="validationFormCheck2">{{site[0]}} - {{site[1]}} occupancy </label>        
+                        {% endfor %}
+                        <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
+                        <label class="form-check-label" for="validationFormCheck2">Toggle this radio</label>
+                      </div> -->
+                      
+                    <div class="invalid-feedback">
+                        Please select a camp site
+                    </div>
+                </div>
+                <div class = "col-auto">
+                    <br>
+                    <input class="btn btn-secondary" type="submit"/>
+                </div>
+        </div>
     </div>
-</div>
 
-<br>
-
-<div class = "col-auto">
-    <input type="submit"/>
-</div>
 </form>
 
 {% endblock %}
