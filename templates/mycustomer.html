@@ -1,25 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
 <!-- code in here to display a list of books-->
-<h2>Selwyn Campground -mycustomer</h2>
+<h2>Selwyn Campground -MyCustomer</h2>
 <h3>Choose the customer</h3>
 
 <form action="/mycustomer" method="POST">
+    <div class="container text-center">
+        <div class = "row justify-content-center">
+            <div class = "col-auto">
+                <br>
+                <select class="form-select" name="customerid" required>
+                    <option {% if customerid is none %} selected {% endif %} disabled value="">Choose customer</option>    
+                    {% for customer in customerdata %}
+                        <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid customer
+                </div>
 
-    <!-- <input type="text" name="customerid"/> -->
-    <select name="customerid">
+            </div>
+            <div class = "col-auto">
+                <br>
+                <input class="btn btn-secondary" type="submit" name="Edit" value="Edit"/>
+            </div>
+            <div class = "col-auto">
+                <br>
+                <input class="btn btn-secondary" type="submit" name="Report" value="Report"/>
+            </div>
+
+        </div>
+    </div>
+    
+
+
+
+    
+        
+
+
+
+    <!-- <select name="customerid">
         {% for customer in customerdata %}
             <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}</option>
         {% endfor %}
         
-    </select>
+    </select> -->
     <!-- <button type="submit">Edit</button>
     <button type="submit" formaction="/mycustomer/report">Report</button> -->
-    <input type="submit" name="Edit" value="Edit">
-    <input type="submit" name="Report" value="Report">
+    <!-- <input type="submit" name="Edit" value="Edit">
+    <input type="submit" name="Report" value="Report"> -->
 </form>
 
 
-</form>
+
 
 {% endblock %}

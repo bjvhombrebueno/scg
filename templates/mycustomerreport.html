@@ -1,15 +1,54 @@
 {% extends "base.html" %}
 {% block content %}
 <!-- code in here to display a list of books-->
-<h2>Selwyn Campground - MyCustomer Report</h2>
-    <h3>Report for customer-{{customerdata[0][1]}} {{customerdata[0][2]}}</h3>
-<!-- {{customerbookingdata}} -->
+<h2>Selwyn Campground - Customer Report</h2>
+    <h3>Report for customer - {{customerdata[0][1]}} {{customerdata[0][2]}}</h3>
+
     
 {% if customerbookingdata %}
-    Stats:
-    <br>Total Nights Booked: {{totalnightsbooked}}
-    <br>Average Occupancy: {{averageoccupancy}}
-    <div class="col-auto">
+    <h5>Stats:</h5>
+    <br><h5>Total Nights Booked: {{totalnightsbooked}}</h5>
+    <br><h5>Average Occupancy: {{averageoccupancy}}</h5>
+
+    <div class="container text-center">
+        <div class = "row justify-content-center">
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <div class = "col-auto">
+                            <th>Site ID</th>
+                        </div>
+                        <div class = "col-auto">
+                            <th>Booking Date</th>
+                        </div>
+                        <div class = "col-auto">
+                            <th>Occupancy</th>
+                        </div>
+                    </tr>
+                </thead>
+                {% for data in customerbookingdata %}
+                    <tr> 
+                        <div class = "col-auto">
+                            <td>{{data[1]}}</td>
+                        </div>
+                        <div class = "col-auto">
+                            <td>{{data[3]}}</td>
+                        </div>
+                        <div class = "col-auto">
+                            <td>{{data[4]}}</td>
+                        </div>
+                        
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- <div class="col-auto">
         <table class="table table-hover">
             <thead>
                 <tr><th>Site</th><th>Booking Date</th><th>Occupancy</th></tr>
@@ -22,7 +61,7 @@
                 </tr>  
             {% endfor %}
         </table>
-    </div>
+    </div> -->
     
 {% else %}
     No bookings found
