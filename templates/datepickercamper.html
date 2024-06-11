@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- code in here to display a list of books-->
-<h2>Selwyn Campground - Who is camping?</h2>
-<h3>Choose the date you'd like view who is camping.</h3>
 
+<h2 class="text-center">Selwyn Campground - Who is camping?</h2>
+<h3 class="text-center">Choose the date you'd like view who is camping.</h3>
+<!-- This form is for choosing the date -->
 <form action="{{url_for('campers')}}" method="POST" class="row needs-validation" novalidate>
     <div class="container text-center">
         <div class = "row justify-content-center">
@@ -18,89 +18,66 @@
                 <br>
                 <input class="btn btn-secondary" type="submit"/>
             </div>
-        
         </div>
-
     </div>
-   
-   
 </form>
+<!-- This page can be accessed by both GET and POST. This part does nothing if it is accessed by GET, 
+ but displays the Date selected and the customers who have booked on that date. 
+ This is to ensure that the part where the results are shown is originally blank when first accessed.   -->
+
+<!-- The form and the results are in the same page so that it is easier for the user to search for 
+ another date without navigating to a different page everytime.  -->
 
 {% if request.method =="POST" %}
-
-
     <br>
-    <h4>Date Selected: {{campdate}}</h4><br>
-    {% if camperlist %}
-    <div class="container text-center">
-        <div class = "row justify-content-center">
-            <table class="table table-hover table-sm">
-                <thead>
-                    <tr>
-                        <div class = "col-auto">
-                            <th>Family Name</th>
-                        </div>
-                        <div class = "col-auto">
-                            <th>First Name</th>
-                        </div>
-                        <div class = "col-auto">
-                            <th>Site ID</th>
-                        </div>
-                        <div class = "col-auto">
-                            <th>Occupancy</th>
-                        </div>
-                    </tr>
-                </thead>
-                {% for camper in camperlist%}
-                    <tr> 
-                        <div class = "col-auto">
-                            <td>{{camper[9]}}</td>
-                        </div>
-                        <div class = "col-auto">
-                            <td>{{camper[8]}}</td>
-                        </div>
-                        <div class = "col-auto">
-                            <td>{{camper[1]}}</td>
-                        </div>
-                        <div class = "col-auto">
-                            <td>{{camper[4]}}</td>
-                        </div>
-                    </tr>
-                {% endfor %}
-            </table>
+    <h4 class="text-center">Date Selected: {{campdate}}</h4><br>
+    
+    {% if camperlist %} 
+        <div class="container text-center">
+            <div class = "row justify-content-center">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <div class = "col-auto">
+                                <th>Family Name</th>
+                            </div>
+                            <div class = "col-auto">
+                                <th>First Name</th>
+                            </div>
+                            <div class = "col-auto">
+                                <th>Site ID</th>
+                            </div>
+                            <div class = "col-auto">
+                                <th>Occupancy</th>
+                            </div>
+                        </tr>
+                    </thead>
+                    {% for camper in camperlist%}
+                        <tr> 
+                            <div class = "col-auto">
+                                <td>{{camper[9]}}</td>
+                            </div>
+                            <div class = "col-auto">
+                                <td>{{camper[8]}}</td>
+                            </div>
+                            <div class = "col-auto">
+                                <td>{{camper[1]}}</td>
+                            </div>
+                            <div class = "col-auto">
+                                <td>{{camper[4]}}</td>
+                            </div>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
 
-    </div>
-
-    
-
-    <!-- <table class="table table-hover">
-        <thead>
-            <tr><th>First Name</th><th>Family Name</th><th>Site ID</th><th>Occupancy</th></tr>
-        </thead>
-        {% for camper in camperlist%}
-            <tr> 
-                <div class = "col-auto">
-                    <td>{{camper[8]}}</td>
-                </div>
-                <div class = "col-auto">
-                    <td>{{camper[9]}}</td>
-                </div>
-                <div class = "col-auto">
-                    <td>{{camper[1]}}</td>
-                </div>
-                <div class = "col-auto">
-                    <td>{{camper[4]}}</td>
-                </div>
-                
-            </tr>
-        {% endfor %}
-    </table> -->
     {% else %}
-        <h5>No campers on that date</h5>
+        <h5 class="text-center">No campers on that date</h5>
     {% endif %}
 
 {% else %}
-
+<!-- do nothing -->
 {% endif %}
+
 {% endblock %}

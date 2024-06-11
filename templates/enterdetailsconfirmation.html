@@ -1,30 +1,27 @@
 {% extends "enterdetails.html" %}
 {% block content %}
-
+ <!-- If the any of the inputs are wrong, then the changes are not uploaded to the database   -->
 {% if flagfirstname and flagfamilyname and flagemail and flagphone %}
-    <br><h4>Changes saved</h4><br>
+    <br><h4 class="text-center">Changes saved</h4><br>
 {% else %}
-    <br><h4>Changes not saved</h4><br>
+    <br><h4 class="text-center">Changes not saved</h4><br>
 {% endif %}
 
-<h6>
+<!-- If any of the inputs are invalid, then the page informs them which one/s-->
+<h6 class="text-center">
     {% if customerid %} Customer = {{customerid}} {% endif %}
 </h6><br>
-<h6>
+<h6 class="text-center">
     First Name = {% if flagfirstname %} {{firstname}} {% else %} Invalid entry {% endif %}
 </h6><br>
-<h6>
+<h6 class="text-center">
     Family Name = {% if flagfamilyname %} {{familyname}} {% else %} Invalid entry {% endif %}
 </h6><br>
-<h6>
+<h6 class="text-center">
     Email Address =  {% if flagemail %} {{email}} {% else %} Invalid entry {% endif %}
 </h6><br>
-<h6>
+<h6 class="text-center">
     Phone = {% if flagphone %} {{phone}}  {% else %} Invalid entry {% endif %}
 </h6><br>
-
-
-
-
 
 {% endblock %}

@@ -1,22 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <!-- code in here to display a list of books-->
-<h2>Selwyn Campground Customer Search</h2>
-<h3>Search for a customer</h3>
-
+<h2 class="text-center">Selwyn Campground Customer Search</h2>
+<h3 class="text-center">Search for a customer</h3>
+<!-- This part gets the search string to match  -->
 <form action="/customer/search" method="POST" class="row needs-validation" novalidate>
     
     <div class="container text-center">
         <div class = "row justify-content-center">
             <div class="col-auto">
                 <input type="text" class="form-control" name="customername" required/>
-                <!-- <div class="valid-feedback">
-                    Looks good!
-                </div> -->
                 <div class="invalid-feedback">
                     Please input a search value
                 </div>
-            
             </div>
             <div class = "col-auto">
                 <input class="btn btn-secondary" type="submit"/>
@@ -24,25 +20,11 @@
         </div>
     </div>
     
-    
-    
-    
-    <!-- <div class="col-auto">
-        <input type="text" class="form-control" name="customername" required/>
-         <div class="valid-feedback">
-            Looks good!
-        </div> 
-        <div class="invalid-feedback">
-            Please input a search value
-        </div>              
-    </div>
-    <div class = "col-auto">
-        <input type="submit"/>
-    </div> -->
-    
 </form>
+<!-- This page can be accessed by both GET and POST. This part does nothing if it is accessed by GET, 
+ but displays the data of the customers who have matched the search string. 
+ This is to ensure that the part where the results are shown is originally blank when first accessed.   -->
 {% if request.method=="POST" %}
-
     {% if customerdata %}
         <div class="container text-center">
             <div class = "row justify-content-center">
@@ -65,7 +47,7 @@
                                 <th>Make a booking</th>
                             </div>
                             <div class = "col-auto">
-                                <th>Go to MyCustomer Page</th>
+                                <th>Go to Customer Home Page</th>
                             </div>
                         </tr>
                     </thead>
@@ -83,52 +65,24 @@
                             <div class = "col-auto">
                                 <td>{{customer[4]}}</td>
                             </div>
+                            <!-- For this part there is links to make a booking and to the customer home page which passes the customer id automatically -->
                             <div class = "col-auto">
                                 <td><a href="/bookingget/?customerid={{customer[0]}}" type="button" class="btn btn-secondary">Link</a></td>
                             </div>
                             <div class = "col-auto">
-                                <td><a href="/mycustomerget/?customerid={{customer[0]}}" type="button" class="btn btn-secondary">Link</a></td>
+                                <td><a href="/customerhomeget/?customerid={{customer[0]}}" type="button" class="btn btn-secondary">Link</a></td>
                             </div>
-                            
                         </tr>
                     {% endfor %}
                 </table>
             </div>
-
         </div>
-
-
-
-
-
-
-
-
-
-        <!-- <table class="table table-hover">
-            <thead>
-                <tr><th>Customer ID</th><th>First Name</th><th>Family Name</th><th>Email Address</th><th>Phone Number</th></tr>
-            </thead>
-            {% for customer in customerdata %}
-                <tr>
-                    <td>{{customer[0]}}</td>
-                    <td>{{customer[1]}}</td>
-                    <td>{{customer[2]}}</td>
-                    <td>{{customer[3]}}</td>
-                    <td>{{customer[4]}}</td>
-                     <td><a href="/booking/{{customer[0]}}">Make a booking</a></td>
-                    <td><a href="/bookingget/?customerid={{customer[0]}}">Make a booking</a></td>
-                </tr>  
-            {% endfor %}
-        </table> -->
     {% else %}
         <br>
-        <h5>No search results found</h5>
+        <h5 class="text-center">No search results found</h5>
     {% endif %}
-
 {% else %}
-
-
+<!-- Do nothing -->
 {% endif %}
 
 

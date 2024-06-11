@@ -79,7 +79,7 @@ def campers():
 #     return render_template("datepickercamper.html", camperlist = camperList)
 
 @app.route("/booking", methods=['GET','POST'])
-@app.route("/booking/<customerid>", methods=['GET','POST'])
+# @app.route("/booking/<customerid>", methods=['GET','POST'])
 @app.route("/bookingget/?customerid=<customerid>", methods=['GET','POST'])
 def booking(customerid=None):
     print (customerid)
