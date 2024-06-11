@@ -29,13 +29,13 @@ def getCursor():
 
 def is_valid_firstname(firstname):
     # Check if firstname matches the format
-    if not re.search(r"(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)", firstname):
+    if not re.search(r"(^[a-zA-Z][a-zA-Z\s]{0,60}[a-zA-Z]$)", firstname):
         return False
     return True
 
 def is_valid_familyname(familyname):
     # Check if familyname matches the format
-    if not re.search(r"(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)", familyname):
+    if not re.search(r"(^[a-zA-Z][a-zA-Z\s]{0,60}[a-zA-Z]$)", familyname):
         return False
     return True
 
@@ -63,7 +63,7 @@ def campers():
     else:
         campDate = request.form.get('campdate')
         connection = getCursor()
-        connection.execute("SELECT * FROM bookings join sites on site = site_id inner join customers on customer = customer_id where booking_date= %s;",(campDate,))
+        connection.execute("SELECT * FROM bookings join sites on site = site_id inner join customers on customer = customer_id where booking_date= %s ORDER BY familyname;",(campDate,))
         print(campDate)
         camperList = connection.fetchall()
         
@@ -100,7 +100,7 @@ def booking(customerid=None):
         # print(occupancy)
         lastNight = firstNight + timedelta(days=int(bookingNights))
         connection = getCursor()
-        connection.execute("SELECT * FROM customers;")
+        connection.execute("SELECT * FROM customers ORDER BY familyname;")
         customerList = connection.fetchall()
         connection.execute("select * from sites where occupancy >= %s AND site_id not in (select site from bookings where booking_date between %s AND %s);",(occupancy,firstNight,lastNight))
         siteList = connection.fetchall()
@@ -165,7 +165,7 @@ def customer():
      else:
         customerName = request.form.get('customername')
         # customerNameEdited =  customerName
-        sql= "SELECT * FROM customers WHERE firstname LIKE '%"+ customerName + "%';"
+        sql= "SELECT * FROM customers WHERE firstname LIKE '%"+ customerName + "%' ORDER BY familyname;"
         print(sql)
         connection = getCursor()
         connection.execute(sql)
@@ -222,7 +222,7 @@ def addcustomer():
 def mycustomer():
     if request.method == "GET":
         connection = getCursor()
-        connection.execute("SELECT * FROM customers ;")
+        connection.execute("SELECT * FROM customers ORDER BY familyname;")
         customerData = connection.fetchall()
         return render_template("mycustomer.html",customerdata = customerData)
     else:
@@ -231,15 +231,15 @@ def mycustomer():
         customerId = request.form.get('customerid')
         if request.form.get('Edit'):
             connection = getCursor()
-            connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
+            connection.execute("SELECT * FROM customers WHERE customer_id = %s ORDER BY familyname;", (int(customerId),))
             customerData = connection.fetchone()
             # return render_template("mycustomeredit.html",customerid =customerId, customerdata= customerData)    
             return render_template("enterdetails.html",customerid =customerId, customerdata= customerData)    
         else:
             connection = getCursor()
-            connection.execute("SELECT * FROM customers WHERE customer_id = %s;", (int(customerId),))
+            connection.execute("SELECT * FROM customers WHERE customer_id = %s ORDER BY familyname;", (int(customerId),))
             customerData = connection.fetchall()
-            connection.execute("SELECT * FROM bookings WHERE customer = %s;", (int(customerId),))
+            connection.execute("SELECT * FROM bookings WHERE customer = %s ORDER BY booking_date;", (int(customerId),))
             customerBookingData = connection.fetchall()
             connection.execute("SELECT COUNT(booking_date) FROM bookings WHERE customer = %s;", (int(customerId),))
             totalNightsBooked = connection.fetchone()[0]

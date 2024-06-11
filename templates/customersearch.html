@@ -50,10 +50,10 @@
                     <thead>
                         <tr>
                             <div class = "col-auto">
-                                <th>First Name</th>
+                                <th>Family Name</th>
                             </div>
                             <div class = "col-auto">
-                                <th>Family Name</th>
+                                <th>First Name</th>
                             </div>
                             <div class = "col-auto">
                                 <th>Email Address</th>
@@ -66,10 +66,10 @@
                     {% for customer in customerdata %}
                         <tr> 
                             <div class = "col-auto">
-                                <td>{{customer[1]}}</td>
+                                <td>{{customer[2]}}</td>
                             </div>
                             <div class = "col-auto">
-                                <td>{{customer[2]}}</td>
+                                <td>{{customer[1]}}</td>
                             </div>
                             <div class = "col-auto">
                                 <td>{{customer[3]}}</td>

@@ -33,7 +33,7 @@ customerid={{customerid}} -->
                     <select class="form-select" name="customer" required>
                         <option {% if customerid is none %} selected {% endif %} disabled value="">Choose customer</option>
                         {% for customer in customerlist %} 
-                        <option {% if customerid|int == customer[0]|int %} selected {% endif %} value="{{customer[0]}}" required>{{customer[1]}} {{customer[2]}}</option>
+                        <option {% if customerid|int == customer[0]|int %} selected {% endif %} value="{{customer[0]}}" required>{{customer[2]}}, {{customer[1]}}</option>
                         {% endfor %}
                     </select>
                     <div class="invalid-feedback">

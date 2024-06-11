@@ -17,14 +17,14 @@
             <div class = "row justify-content-center">
                 <div class="col-auto">
                     <label for="firstname" class="form-label">First name: </label><br>
-                    <input type="text" class="form-control" name="firstname" {% if customerdata %} value="{{customerdata[1]}}" {% endif %} pattern= "(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)" required />
+                    <input type="text" class="form-control" name="firstname" {% if customerdata %} value="{{customerdata[1]}}" {% endif %} pattern= "(^[a-zA-Z][a-zA-Z\s]{0,60}[a-zA-Z]$)" required />
                     <div class="invalid-feedback">
                         Please enter valid first name
                     </div>  
                 </div>
                 <div class="col-auto">
                     <label for="familyname" class="form-label">Family name: </label><br>
-                    <input type="text" class="form-control" name="familyname" {% if customerdata %} value="{{customerdata[2]}}" {% endif %} pattern="(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)" required />
+                    <input type="text" class="form-control" name="familyname" {% if customerdata %} value="{{customerdata[2]}}" {% endif %} pattern="(^[a-zA-Z][a-zA-Z\s]{0,60}[a-zA-Z]$)" required />
                     <div class="invalid-feedback">
                         Please enter valid family name
                     </div>  

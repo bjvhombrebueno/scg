@@ -12,7 +12,7 @@
                 <select class="form-select" name="customerid" required>
                     <option {% if customerid is none %} selected {% endif %} disabled value="">Choose customer</option>    
                     {% for customer in customerdata %}
-                        <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}</option>
+                        <option value="{{customer[0]}}">{{customer[2]}}, {{customer[1]}}</option>
                     {% endfor %}
                 </select>
                 <div class="invalid-feedback">
