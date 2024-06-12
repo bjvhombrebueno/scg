@@ -79,7 +79,6 @@ def campers():
 #     return render_template("datepickercamper.html", camperlist = camperList)
 
 @app.route("/booking", methods=['GET','POST'])
-# @app.route("/booking/<customerid>", methods=['GET','POST'])
 @app.route("/bookingget/?customerid=<customerid>", methods=['GET','POST'])
 def booking(customerid=None):
     print (customerid)
@@ -221,56 +220,55 @@ def customeradd():
 @app.route("/customerhome", methods=['GET','POST'])
 @app.route("/customerhomeget/?customerid=<customerid>", methods=['GET','POST'])
 def customerhome(customerid=None):
+    # There are 2 ways to get into the customer home page, when 'GET' is used it displays the selection box for the customer 
+    # and 2 buttons for either editing or generating the report for the selected customer.  
+    # Editing and viewing are grouped together as they both need a customer id to function.
+     
     if request.method == "GET":
         connection = getCursor()
         connection.execute("SELECT * FROM customers ORDER BY familyname;")
-        customerData = connection.fetchall()
-        return render_template("customerhome.html",customerdata = customerData, customerid=customerid)
+        # customerData = connection.fetchall()
+        customerList = connection.fetchall()
+        # return render_template("customerhome.html",customerdata = customerData, customerid=customerid)
+        return render_template("customerhome.html",customerlist = customerList, customerid=customerid)
     else:
-        print(request.args)
-        print(request.form)
         customerId = request.form.get('customerid')
+        # When the Edit button is pressed, there is redirection to the enterdetails page which it shares with the customeradd function.
         if request.form.get('Edit'):
             connection = getCursor()
             connection.execute("SELECT * FROM customers WHERE customer_id = %s ORDER BY familyname;", (int(customerId),))
             customerData = connection.fetchone()
-            # return render_template("customerhomeedit.html",customerid =customerId, customerdata= customerData)    
             return render_template("enterdetails.html",customerid =customerId, customerdata= customerData)    
         else:
+            # When the Report button is pressed, gets the values from the database and displays it on the customerhome page.
+            # This is done so that the form and the results are on the same page and the user would not have to navigate away
+            # in case a new report for a different customer needs to be generated. 
             connection = getCursor()
             connection.execute("SELECT * FROM customers WHERE customer_id = %s ORDER BY familyname;", (int(customerId),))
             customerData = connection.fetchall()
+            connection.execute("SELECT * FROM customers ORDER BY familyname;")
+            customerList = connection.fetchall()
             connection.execute("SELECT * FROM bookings WHERE customer = %s ORDER BY booking_date;", (int(customerId),))
             customerBookingData = connection.fetchall()
             connection.execute("SELECT COUNT(booking_date) FROM bookings WHERE customer = %s;", (int(customerId),))
             totalNightsBooked = connection.fetchone()[0]
             connection.execute("SELECT AVG(occupancy) FROM bookings WHERE customer = %s;", (int(customerId),))
             averageOccupancy = connection.fetchall()[0][0]
-
-            return render_template("customerreport.html",customerid = customerId, customerdata = customerData, customerbookingdata =customerBookingData, totalnightsbooked = totalNightsBooked,averageoccupancy = averageOccupancy)
+            return render_template("customerhome.html",customerid = customerId, customerdata = customerData, customerlist = customerList, customerbookingdata =customerBookingData, totalnightsbooked = totalNightsBooked,averageoccupancy = averageOccupancy)
         
 @app.route("/customerhome/edit", methods=['POST'])
 def customerhomeedit():
-    print(request.args)
-    print(request.form)
+    # For this part the input values from the form are checked if they are valid
     customerId = request.form.get('customerid')
     firstName = request.form.get('firstname')
     familyName = request.form.get('familyname')
     email = request.form.get('email')
     phone = request.form.get('phone')       
-    
-    # connection.execute("SELECT max(booking_id) FROM scg.bookings;")
-    # bookingId = connection.fetchall()
-    print(request.form['customerid'])
-    print(firstName)
-    print(familyName)
-    print(email)
-    print(phone)
     flagFirstName = is_valid_firstname(firstName)
     flagFamilyName = is_valid_familyname(familyName)
     flagEmail = is_valid_email(email)
     flagPhone = is_valid_phone(phone)
-
+    # if they are all of them are valid they are written to the database, otherwise nothing is done.
     if (is_valid_firstname(firstName) and is_valid_familyname(familyName) and is_valid_email(email) and is_valid_phone(phone)):
         connection = getCursor()
         connection.execute("UPDATE customers SET firstname = %s, familyname = %s, email = %s, phone = %s WHERE customer_id = %s;", (firstName, familyName, email, phone,customerId,))
@@ -279,12 +277,10 @@ def customerhomeedit():
 
     return render_template("enterdetailsconfirmation.html",customerid =customerId, firstname=firstName,familyname=familyName, email = email, phone=phone, flagfirstname = flagFirstName, flagfamilyname = flagFamilyName, flagemail= flagEmail, flagphone =flagPhone)
 
-@app.route("/customerhome/report", methods=['GET','POST'])
-def customerreport(customerid=None):
 
-    return render_template("customerreport.html")
+
 
 @app.route("/customerhomeget/", methods=['GET','POST'] )
+# This is just to get the correct argument to be passed to the customerhome 
 def customerhomeget():
-    print(request.args)
     return customerhome(request.args['customerid'])
